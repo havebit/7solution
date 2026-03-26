@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/pallat/training/7solution/grpc/proto";
+
+service OrderService {
+  rpc CreateOrder(OrderRequest) returns (OrderResponse);
+}
+
+message OrderRequest {
+  string item_name = 1;
+  int32 quantity = 2;
+}
+
+message OrderResponse {
+  string order_id = 1;
+  string status = 2;
+  string payment_status = 3;
+}
+
+service PaymentService {
+  rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+}
+
+message PaymentRequest {
+  string order_id = 1;
+  float amount = 2;
+}
+
+message PaymentResponse {
+  string status = 1;
+  string node_id = 2;
+}

@@ -1,0 +1,26 @@
+services:
+  order-service:
+    build: .
+    environment:
+      - SERVICE_TYPE=order
+      - PAYMENT_ADDR=payment-service:50051
+      - PORT=50051
+    ports:
+      - "50051:50051"
+    depends_on:
+      - payment-service
+
+  payment-service:
+    build: .
+    environment:
+      - SERVICE_TYPE=payment
+      - PORT=50051
+    deploy:
+      replicas: 3
+    # Note: In a real cluster, you'd use a load balancer for gRPC (like Envoy or Nginx)
+    # or use client-side load balancing with a service discovery like Consul/K8s.
+    # For this demo, docker-compose's internal DNS will round-robin among replicas.
+
+networks:
+  default:
+    name: grpc-network
