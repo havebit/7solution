@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+// กำหนด package สำหรับ Go (อ้างอิงตามโครงสร้างโปรเจกต์ของคุณ)
+option go_package = "github.com/pallat/helloproto";
+
+package hello;
+
+// ตัวอย่าง Message พื้นฐาน
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string message = 1;
+}
+
+// ตัวอย่าง gRPC Service ที่ใช้ Message ด้านบน
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
